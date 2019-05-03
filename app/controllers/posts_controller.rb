@@ -21,9 +21,18 @@ class PostsController < ApplicationController
   end
 
   def edit
+    @post = Post.find(params[:id])
+    puts "----------------------------------"
+    p @post
   end
 
   def update
+    # updateデータを取得([:id])を使用して
+    #update メソッドを使って更新
+    @post = Post.find(params[:id])
+    # 詳細画面にリダイレクト
+    @post.update(post_params)
+
   end
 
   def destroy

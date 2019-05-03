@@ -39,6 +39,13 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    # 対象データを1件取得する
+    @post = Post.find(params[:id])
+    # destroyアクションで消す
+    @post.destroy
+    # 一覧ページにリダイレクトする
+#    redirect_to @post
+    redirect_to posts_path
   end
 
   private

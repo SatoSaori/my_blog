@@ -1,37 +1,28 @@
 <div class="row">
   <div class="col-md-8">
-  左側
-  <% @posts.each do |post| %>
-    <div class="article">
-      <h2>タイトル： <%= post.title %></h2>
-      <p>カテゴリ： <%= post.category %></p>
-      <p>作成日： <%= post.created_at %></p>
-      <p><%=  truncate(post.body, length: 50) %></p>
-      <p><%= link_to "続きを読む", post, class: "btn btn-info" %></p>
-    </div>
-  <% end %>
+    <% @posts.each do |post| %>
+      <div class="article">
+        <h2 class="post_title">タイトル:<%= post.title %></h2>
+        <p>カテゴリ:<%= post.category %></p>
+        <p>作成日:<%= post.created_at %></p>
+        <p><%= truncate(post.body, length: 50) %></p>
+        <p><%= link_to "続きを読む", post, class: "btn btn-info"  %></p>
+        <hr>
+      </div>
+    <% end %>
   </div>
   <div class="col-md-4">
-  右側
-  <div class="card">
-    <%= image_tag  @author.image_url, class: "card-img-top", alt: "著者イメージ" %>
-    <div class="card-body">
-    <h3>著者名： <%=  @author.name %></h3>
-    <p>詳細： <%=  @author.description %></p>
-    
+    <div class="card">
+      <%= image_tag @author.image_url, class: "card-img-top", alt: "著者イメージ" %>
+      <div class="card-body">
+        <h3>著者名:<%= @author.name %></h3>
+        <p>詳細:<%= @author.description %></p>
+      </div>
     </div>
-
     <div class="list-group">
-      <% @new_posts.each_with_index do |post, index| %>
-        <%= link_to post.title, post, class: "list-group-item post_title" %>
-      <% break if index >= 5 %>
-      <%= link_to post.title, post, class: "list-group-item post_title" %>
-      
+      <% @new_posts.each do |post| %>
+        <%= link_to post.title, post, class: "list-group-item post_title"  %>
       <% end %>
-    
     </div>
   </div>
-  
-  </div>
-
 </div>

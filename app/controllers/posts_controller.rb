@@ -1,12 +1,15 @@
 class PostsController < ApplicationController
+
+before_action :set_post, only: [:show, :edit, :destroy, :update]
+
   def index
-    @posts = Post.all
-    @new_posts = Post.all
+    @posts = Post.order(created_at: :desc).limit(5)
+    @new_posts = Post.order(created_at: :desc).limit(5)
     @author = Author.first
   end
 
   def show
-    @post = Post.find(params[:id])
+    set_post
 
   end
 
@@ -19,12 +22,10 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.save
     redirect_to @post
-    
-
   end
 
   def edit
-    @post = Post.find(params[:id])
+    set_post
     puts "----------------------------------"
     p @post
   end
@@ -32,7 +33,7 @@ class PostsController < ApplicationController
   def update
     # updateデータを取得([:id])を使用して
     #update メソッドを使って更新
-    @post = Post.find(params[:id])
+    set_post
     # 詳細画面にリダイレクト
     @post.update(post_params)
     redirect_to @post
@@ -40,7 +41,7 @@ class PostsController < ApplicationController
 
   def destroy
     # 対象データを1件取得する
-    @post = Post.find(params[:id])
+    set_post
     # destroyアクションで消す
     @post.destroy
     # 一覧ページにリダイレクトする
@@ -52,6 +53,10 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:title, :body, :category)
+  end
+
+  def set_post
+    @post = Post.find(params[:id])
   end
 
 end

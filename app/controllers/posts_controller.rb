@@ -3,7 +3,8 @@ class PostsController < ApplicationController
 before_action :set_post, only: [:show, :edit, :destroy, :update]
 
   def index
-    @posts = Post.order(created_at: :desc).limit(5)
+    @q = Post.order(created_at: :desc).ransack(params[:q])
+    @posts = @q.result(distinct: true)
     @new_posts = Post.order(created_at: :desc).limit(5)
     @author = Author.first
   end
